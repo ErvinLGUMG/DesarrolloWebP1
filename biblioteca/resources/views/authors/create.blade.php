@@ -1,38 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Crear / Autor</title>
-</head>
-<body>
-    <h1>CREAR Autor</h1>
+@extends('layout')
+@section('title', 'Autores')
 
-    <form method="POST" action="{{route('authors.store')}}">
-        @csrf
-        <label>
-            ID del Autor <br>
-             <input type="number" name="id" {{--value="{{ old('title',$project->title)}}  "--}} required>
-        </label>
-        <br>
-        <label>
-            Nombre del Autor <br>
-            <input type="text" name="name" value="Autor de Pruebas" {{-- value="{{ old('url', $project->url) }}  "--}} required>
-        </label>
-        <br>
-        <label>
-            Pais del Autor <br>
-            <input type="text" name="pais" value="BLR" {{-- value="{{ old('url', $project->url) }}  "--}} required>
-        </label>
-        <br>
-        <label>
-            Estado del Autor <br>
-            <input type="number" name="state" value="1" {{-- value="{{ old('url', $project->url) }} "--}} required>
-        </label>
-        <br>
-        <button type="submit">Guardar</button>
-    </form>
+@section('lateral')
+<li class="nav-item">
+    {{-- <a class="nav-link " href="#">Usuarios</a> --}}
+</li>
+@endsection
 
-</body>
-</html>
+@section('thead')
+{{-- <th>Formulario</th> --}}
+<th colspan="3" style="text-align:center">OPCIONES</th>
+{{-- <th><a href="{{ route('users.create') }}">Crear USUARIO</a></th> --}}
+@endsection
+
+@section('tbody')
+<tr>
+    <td style="text-align:center"> <a class="btn btn-success" href="{{ route('authors.create') }}" role="button">Crear un autor nuevo</a> </td>
+    <td style="text-align:center"> <a class="btn btn-danger" href="{{ route('authors.delete') }}" role="button">Eliminar un autor</a> </td>
+
+</tr>
+<th colspan="3" style="text-align:center">CREAR AUTOR</th>
+<tr>
+    <td colspan="2">
+
+        <form method="POST" action="{{ route('authors.store') }}" class="needs-validation" novalidate>
+            @csrf
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom02">Autor</label>
+                <input type="text" name="author" class="form-control" id="validationCustom02" placeholder="Ingrese nuevo titulo" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom03">Pais</label>
+                <select id="inputState" name="owner" class="form-control">
+                        @foreach ($paises as $value)
+                            @foreach ($value as $pais)
+                                <option>{{ $pais->Name }}</option>
+                            @endforeach
+                        @endforeach
+                        {{-- {{ var_dump($data) }} --}}
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit" style="align-items:center">Actualizar</button>
+          </form>
+
+          <script>
+          // Example starter JavaScript for disabling form submissions if there are invalid fields
+          (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.getElementsByClassName('needs-validation');
+              // Loop over them and prevent submission
+              var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                  if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  form.classList.add('was-validated');
+                }, false);
+              });
+            }, false);
+          })();
+          </script>
+    </td>
+</tr>
+@endsection

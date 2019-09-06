@@ -10,35 +10,18 @@ use function GuzzleHttp\json_encode;
 
 class SignInController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store()
     {
-        //return request();
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
          ]);
@@ -65,64 +48,44 @@ class SignInController extends Controller
 
                 foreach ($permisions as $permiso) {
                     $vector[] = $permiso->PermissionsId;
-                    //print_r($permiso->PermissionsId);
-                        // return json_decode($permiso->getBody()->getContents());
-
                 }
             }
         }
-        // return $permiso2;
-        // return redirect()->view('/',[
-        //     'user' => $user,
-        //     'id' => $id,
-        //     'name' => $name,
-        //     'roleId' => $roleId,
-        //     'permiso1' => $vector[1],
-        //     'permiso2' => $vector[2],
-        //     'permiso3' => $vector[3],
-        //  ]);
+
+        $client = new Client();
+        $request = $client->get('http://40.117.209.118/LibraryApi/api/Category/ListCategory');
+        $menu = $request->getBody();
+
+
+        //return view('welcome',['menu'=> json_decode($menu)]);
+
+        return view('/welcome', [
+                'user' => $user,
+                'id' => $id,
+                'name' => $name,
+                'roleId' => $roleId,
+                'permiso1' => $vector[1],
+                'permiso2' => $vector[2],
+                'permiso3' => $vector[3],
+                'menu'=> json_decode($menu)
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

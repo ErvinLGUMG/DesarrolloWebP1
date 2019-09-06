@@ -91,6 +91,15 @@
                         @endforeach
 
                     @endforeach
+                    <br>
+                    {{-- ID: {{$id}} <br>
+                    NAME: {{$name}} <br>
+                    USER: {{ $user }} <br>
+                    ROLEID: {{$roleId}} <br>
+                    PERMISO 1: {{$permiso1}} <br>
+                    PERMISO 2: {{$permiso2}} <br>
+                    PERMISO 3: {{$permiso3}} <br> --}}
+
                 </div>
             </div>
         </div>

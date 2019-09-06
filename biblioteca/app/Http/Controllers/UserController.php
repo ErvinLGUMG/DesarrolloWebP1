@@ -10,11 +10,6 @@ use function GuzzleHttp\json_encode;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $client = new Client();
@@ -52,11 +47,12 @@ class UserController extends Controller
                 'Password' => request('pass'),
                 'Email' => request('email'),
                 'Telephone' => request('phone'),
-                'State' => request('state')
+                'State' => 1
             ])
          ]);
-        // return $response->getBody();
-         return redirect()->route('users.index');
+        return $response->getBody();
+        //  return redirect()->route('users.index');
+        return request();
     }
 
     /**
@@ -89,7 +85,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('users.edit',['id'=>$id]);
+        // return $id;
     }
 
     /**
@@ -99,19 +96,33 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $body = json_encode([
+            'UserId' => $id,
+            'Name' => request('name'),
+            'Email' => request('email'),
+            'Telephone' => request('phone'),
+        ]);
+
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('40.117.209.118/libraryapi/api/Security/UpdateUser', [
+            'body'=>$body
+        ]);
+        return $response->getBody();
+        // return $body;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('http://40.117.209.118/LibraryApi/api/Security/ChangeStateUser?UserId='.$id.'&State=false', [
+        ]);
+
+        return redirect()->route('users.index');
     }
 }

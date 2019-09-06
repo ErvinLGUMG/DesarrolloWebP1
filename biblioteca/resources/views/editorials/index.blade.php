@@ -12,16 +12,16 @@
 @endsection
 @section('tbody')
     <tr>
-        <td style="text-align:center"> <a class="btn btn-success" href="{{ route('users.create') }}" role="button">Crear un usuario nuevo</a> </td>
+        <td style="text-align:center"> <a class="btn btn-success" href="{{ route('editorials.create') }}" role="button">Crear Editorial</a> </td>
     </tr>
-    <th colspan="3" style="text-align:center">USUARIOS</th>
+<th colspan="3" style="text-align:center">EDITORIALES</th>
 
 
-    @foreach ($users as $item)
-        @foreach ($item as $user)
+    @foreach ($editorials as $item)
+        @foreach ($item as $editorial)
             <tr>
               <td colspan="3" style="text-align:center">
-                  <a href="{{ route('users.show',$user->UserId) }}"> {{ $user->Name }}</a>
+                  <a href="{{ route('editorials.show',$editorial->EditorialId) }}"> {{ $editorial->Name }}</a>
                 </td>
             </tr>
         @endforeach

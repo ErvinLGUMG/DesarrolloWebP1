@@ -10,33 +10,19 @@ use function GuzzleHttp\json_encode;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('authors.create');
+        $client = new Client();
+        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $v1 = $request->getBody();
+
+        $paises = json_decode($v1);
+
+        return view('authors.create', ['paises'=>$paises]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
@@ -53,48 +39,59 @@ class AuthorController extends Controller
         //return redirect()->route('users.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function createEdit()
     {
-        //
+        $client = new Client();
+        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $v3 = $request->getBody();
+        $paises = json_decode($v3);
+
+        return view('authors.edit',['paises'=>$paises]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function storeEdit()
     {
-        //
+        $client = new Client();
+        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $v3 = $request->getBody();
+        $v3 = json_decode($v3);
+        $countId = '';
+        foreach ($v3 as $value) {
+            foreach ($value as $Country) {
+                if ($Country->Name == request('country')) {
+                    $countId = $Country->CountryId;
+                    break;
+                }
+            }
+        }
+
+        $body = json_encode([
+            'AuthorlId' => request('author'),
+            'Name' => request('name'),
+            'CountryId' =>$countId
+        ]);
+
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('40.117.209.118/libraryapi/api/Author/Update', [
+            'body'=>$body
+        ]);
+        return $response->getBody();
+        // return $body;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function delete(){
+        return view('authors.delete');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function eliminar()
     {
-        //
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('40.117.209.118/LibraryApi/api/Security/ChangeStateUser?UserId='.request('id').'&State=false');
+
+        return $response->getBody();
     }
 }

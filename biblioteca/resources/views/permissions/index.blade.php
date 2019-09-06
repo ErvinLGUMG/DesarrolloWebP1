@@ -9,11 +9,10 @@
 @endsection
 
 @section('thead')
-    <th>Permisos</th>
-    <th><a href="{{ route('permissions.create') }}">Crear Permiso</a></th>
+<th colspan="3" style="text-align:center">Permisos</th>
+    {{-- <th><a href="{{ route('permissions.create') }}">Crear Permiso</a></th> --}}
 @endsection
 @section('tbody')
-
     @foreach ($permissions as $item)
         @foreach ($item as $permission)
             <tr>

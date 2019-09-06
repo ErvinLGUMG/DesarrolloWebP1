@@ -75,6 +75,8 @@
 
     <div class="container-fluid">
         <div class="row">
+
+
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
@@ -86,7 +88,7 @@
                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>
-                                @yield('title') {{-- --}}<span class="sr-only">(current)</span>
+                                @yield('title')<span class="sr-only">(current)</span>
                             </a>
                         </li>
                         @include('lateral')
@@ -105,11 +107,11 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>
-                            <tr>
-                                {{--<th>
+                            {{--<tr>
+                                <th>
                                     Header
-                                </th>--}}
-                            </tr>
+                                </th>
+                            </tr>--}}
                             @yield('thead')
                         </thead>
                         <tbody>
@@ -120,9 +122,20 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            {{-- @yield('thead') --}}
+                        </thead>
+                        <tbody>
+                            @yield('tbody')
+                        </tbody>
+                    </table>
+                </div>
             </main>
         </div>
     </div>
+    @yield('form')
     <script src="Bootstrap_files/jquery-3.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
