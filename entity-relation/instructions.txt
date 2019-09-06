@@ -1,0 +1,7 @@
+#every entity have an field called 'state' and the function is to delete that.
+	1= active
+	0= deactivate
+
+#at the field 'private'is to know if the book is private
+	1= private
+	2= not private
