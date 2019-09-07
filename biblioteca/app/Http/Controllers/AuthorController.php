@@ -81,17 +81,8 @@ class AuthorController extends Controller
         // return $body;
     }
 
-    public function delete(){
-        return view('authors.delete');
-    }
-
-    public function eliminar()
+    public function destroy($id)
     {
-        $client = new Client([
-            'headers'=>['Content-Type' => 'application/json']
-        ]);
-        $response = $client->post('40.117.209.118/LibraryApi/api/Security/ChangeStateUser?UserId='.request('id').'&State=false');
-
-        return $response->getBody();
+        //
     }
 }

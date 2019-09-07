@@ -15,11 +15,11 @@
 
 @section('tbody')
 <tr>
-    <td style="text-align:center"> <a class="btn btn-success" href="{{ route('authors.create') }}" role="button">Crear un autor nuevo</a> </td>
-    <td style="text-align:center"> <a class="btn btn-danger" href="{{ route('authors.delete') }}" role="button">Eliminar un autor</a> </td>
+    <td style="text-align:center"> <a class="btn btn-success" href="#" role="button">Crear un libro nuevo</a> </td>
+    <td style="text-align:center"> <a class="btn btn-danger" href="#" role="button">Eliminar un libro</a> </td>
 
 </tr>
-<th colspan="3" style="text-align:center">CREAR AUTOR</th>
+<th colspan="3" style="text-align:center">ACTUALIZAR LIBRO</th>
 <tr>
     <td colspan="2">
 

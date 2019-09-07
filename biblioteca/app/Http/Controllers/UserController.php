@@ -115,14 +115,20 @@ class UserController extends Controller
         // return $body;
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        $client = new Client([
-            'headers'=>['Content-Type' => 'application/json']
-        ]);
-        $response = $client->post('http://40.117.209.118/LibraryApi/api/Security/ChangeStateUser?UserId='.$id.'&State=false', [
-        ]);
 
-        return redirect()->route('users.index');
+        // $body = json_encode([
+        // ]);
+
+        // $client = new Client([
+        //     'headers'=>['Content-Type' => 'application/json']
+        // ]);
+        // $response = $client->post('http://40.117.209.118/LibraryApi/api/Security/ChangeStateUser?UserId='.$id.'&State='.'0', [
+        //     'body'=>$body
+        // ]);
+
+        // return $response->getBody();
+        // return redirect()->route('users.index');
     }
 }

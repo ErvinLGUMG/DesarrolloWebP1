@@ -12,10 +12,7 @@
             <a class="btn btn-primary" href="{{ route('editorials.edit',$editorial->EditorialId) }}" role="button">Actualizar esta editorial</a>
         </td>
         <td colspan="2" style="text-align:center">
-            <form method="POST" action="{{ route('editorials.delete',$editorial->EditorialId) }}">
-                @csrf
-                <button type="submit" class="btn btn-danger">Eliminar esta Editorial</button>
-            </form>
+            <a class="btn btn-danger" href="{{ route('editorials.destroy',$editorial->EditorialId) }}" role="button">Eliminar esta editorial</a>
         </td>
     </tr>
 

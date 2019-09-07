@@ -15,14 +15,14 @@
 
 @section('tbody')
 <tr>
-    <td style="text-align:center"> <a class="btn btn-primary" href="{{ route('books.edit') }}" role="button">Actualizar un libro</a> </td>
-    <td style="text-align:center"> <a class="btn btn-danger" href="{{ route('books.delete') }}" role="button">Eliminar un libro</a> </td>
+    <td style="text-align:center"> <a class="btn btn-primary" href="#" role="button">Actualizar un libro</a> </td>
+    <td style="text-align:center"> <a class="btn btn-danger" href="#" role="button">Eliminar un libro</a> </td>
 </tr>
 <th colspan="3" style="text-align:center">ACTUALIZAR LIBRO</th>
 <tr>
     <td colspan="2">
 
-        <form method="POST" action="{{ route('books.store',$id) }}" class="needs-validation" novalidate>
+        <form method="POST" action="#" class="needs-validation" novalidate>
             @csrf
             <div class="form-row">
                     <div class="col-md-6 mb-3">

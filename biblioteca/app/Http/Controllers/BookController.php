@@ -90,7 +90,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function store($id)
+    public function store(Request $request)
     {
         $client = new Client([
             'headers' => ['Content-Type' => 'application/json']
@@ -201,19 +201,28 @@ class BookController extends Controller
         //return view('books.edit');
     }
 
-    public function delete()
-    {
-        return view('books.delete');
-    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    // public function update(Request $request)
+    // {
+    //     dd($request);
+    // }
 
-    public function eliminar()
-    {
-        $client = new Client([
-            'headers'=>['Content-Type' => 'application/json']
-        ]);
-        $response = $client->post('40.117.209.118/LibraryApi/api/Document/ChangeState?DocumentId='.request('id').'&State=false');
 
-        return $response->getBody();
-        // return request('id');
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

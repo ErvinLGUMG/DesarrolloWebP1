@@ -104,12 +104,14 @@ class EditorialController extends Controller
         return $response->getBody();
     }
 
-    public function delete($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $client = new Client([
-            'headers'=>['Content-Type' => 'application/json']
-        ]);
-        $response = $client->post('40.117.209.118/LibraryApi/api/Editorial/ChangeState?EditorialId='.$id.'&State=false');
-        return redirect()->route('editorials.index');
+        //
     }
 }
