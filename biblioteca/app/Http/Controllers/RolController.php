@@ -8,15 +8,15 @@ use GuzzleHttp\Client;
 
 class RolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct(){
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/ListRoles');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/ListRoles');
         $roles = $request->getBody();
 
         return view('roles.index',['roles' => json_decode($roles)]);
@@ -29,7 +29,7 @@ class RolController extends Controller
      */
     public function create(Request $request)
     {
-        // $response = $client->request('POST', '40.117.209.118/libraryapi/api/Security/CreateRol', [
+        // $response = $client->request('POST', '34.217.191.19/libraryapi/api/Security/CreateRol', [
         //     'form_params' => [
         //         'RoleId' => 'PRB',
         //         'Name' => 'PRUEBA',
@@ -59,7 +59,7 @@ class RolController extends Controller
     public function show($Roleid)
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/Role?RoleId='.$Roleid);
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/Role?RoleId='.$Roleid);
         $roles = $request->getBody()->getContents();
 
         $roles = json_decode($roles);

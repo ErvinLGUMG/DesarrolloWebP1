@@ -7,25 +7,16 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
+use Session;
 
 class SignInController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
     public function store()
     {
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
          ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Security/LoginUser', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Security/LoginUser', [
             'body'=>json_encode([
                 'username' => request('id'),
                 'password' => request('password'),
@@ -52,42 +43,19 @@ class SignInController extends Controller
             }
         }
 
-        $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Category/ListCategory');
-        $menu = $request->getBody();
-
-
-        //return view('welcome',['menu'=> json_decode($menu)]);
-
-        return view('/welcome', [
-                'user' => $user,
-                'id' => $id,
-                'name' => $name,
-                'roleId' => $roleId,
-                'permiso1' => $vector[1],
-                'permiso2' => $vector[2],
-                'permiso3' => $vector[3],
-                'menu'=> json_decode($menu)
+        // $client = new Client();
+        // $request = $client->get('http://34.217.191.19/LibraryApi/api/Category/ListCategory');
+        // $menu = $request->getBody();
+        session([
+            'user'=> $user,
+            'id'=> $id,
+            'name'=> $name,
+            'roleId'=> $roleId,
+            // 'permiso1'=> $vector[1],
+            // 'permiso2'=> $vector[2],
+            // 'permiso3'=> $vector[3]
         ]);
-    }
 
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('inicio');
     }
 }

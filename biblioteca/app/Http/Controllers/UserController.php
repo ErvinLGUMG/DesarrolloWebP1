@@ -10,10 +10,15 @@ use function GuzzleHttp\json_encode;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/ListUsers');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/ListUsers');
         $users = $request->getBody();
 
         return view('users.index',['users' => json_decode($users)]);
@@ -40,7 +45,7 @@ class UserController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
          ]);
-         $response = $client->post('40.117.209.118/libraryapi/api/Security/CreateUser', [
+         $response = $client->post('34.217.191.19/libraryapi/api/Security/CreateUser', [
             'body'=>json_encode([
                 'UserId' => request('id'),
                 'Name' => request('name'),
@@ -50,21 +55,15 @@ class UserController extends Controller
                 'State' => 1
             ])
          ]);
-        return $response->getBody();
-        //  return redirect()->route('users.index');
-        return request();
+
+        return back()->with('status','El usuario ha sido creado');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($UserId)
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/User?UserId='.$UserId);
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/User?UserId='.$UserId);
         $users = $request->getBody()->getContents();
 
         $users = json_decode($users);
@@ -77,25 +76,11 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         return view('users.edit',['id'=>$id]);
-        // return $id;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update($id)
     {
         $body = json_encode([
@@ -108,27 +93,21 @@ class UserController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Security/UpdateUser', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Security/UpdateUser', [
             'body'=>$body
         ]);
-        return $response->getBody();
+        return redirect()->route('users.edit')->with('status','El usuario ha sido creado');
         // return $body;
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('http://34.217.191.19/LibraryApi/api/Security/ChangeStateUser?UserId='.$id.'&State=false', [
+        ]);
 
-        // $body = json_encode([
-        // ]);
-
-        // $client = new Client([
-        //     'headers'=>['Content-Type' => 'application/json']
-        // ]);
-        // $response = $client->post('http://40.117.209.118/LibraryApi/api/Security/ChangeStateUser?UserId='.$id.'&State='.'0', [
-        //     'body'=>$body
-        // ]);
-
-        // return $response->getBody();
-        // return redirect()->route('users.index');
+        return redirect()->route('users.index');
     }
 }

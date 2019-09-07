@@ -70,15 +70,28 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="#">Bienvenido... {{ session()->get('name') }}</a>
+                        @if (session()->get('id')==null)
+                            <a href="{{ route('login') }}">Login</a>
+                        @endif
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            @if (session()->get('roleId') =='ADMIN' )
+                                <a href="{{ route('users.create') }}">Crear Usuario</a>
+                            @endif
                         @endif
+
+                        @if (session()->get('id') != null)
+                            <a href="#" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">Cerrar </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                                @csrf
+                            </form>
+                        @endif
+
                     @endauth
                 </div>
             @endif
-
             <div class="content">
                 <div class="title m-b-md">
                     Biblioteca
@@ -87,18 +100,17 @@
                 <div class="links">
                     @foreach ($menu as $item)
                         @foreach ($item as $value)
-                        <a href="{{ route('biblioteca.inicio', [$value->CategoryId, $value->Name, 'CATEGORIA'])}}">{{$value->Name}}</a>
+                        <a href="{{ route('biblioteca.inicio', [$value->CategoryId, $value->Name])}}">{{$value->Name}}</a>
                         @endforeach
-
                     @endforeach
                     <br>
-                    {{-- ID: {{$id}} <br>
-                    NAME: {{$name}} <br>
-                    USER: {{ $user }} <br>
-                    ROLEID: {{$roleId}} <br>
-                    PERMISO 1: {{$permiso1}} <br>
-                    PERMISO 2: {{$permiso2}} <br>
-                    PERMISO 3: {{$permiso3}} <br> --}}
+                    ID: {{ session()->get('id') }} <br>
+                    NAME: {{ session()->get('name') }} <br>
+                    USER: {{ session()->get('user') }} <br>
+                    ROLEID: {{ session()->get('roleId') }} <br>
+                    {{-- PERMISO 1: {{ session()->get('permiso1') }} <br>
+                    PERMISO 2: {{ session()->get('permiso2') }} <br>
+                    PERMISO 3: {{ session()->get('permiso3') }} <br> --}}
 
                 </div>
             </div>

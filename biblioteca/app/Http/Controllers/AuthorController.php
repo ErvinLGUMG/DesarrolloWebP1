@@ -10,11 +10,14 @@ use function GuzzleHttp\json_encode;
 
 class AuthorController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin');
+    }
 
     public function create()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Country/ListCountry');
         $v1 = $request->getBody();
 
         $paises = json_decode($v1);
@@ -27,7 +30,7 @@ class AuthorController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Author/Create', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Author/Create', [
             'body'=>json_encode([
                 'AuthorId' => request('id'),
                 'Name' => request('name'),
@@ -42,7 +45,7 @@ class AuthorController extends Controller
     public function createEdit()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Country/ListCountry');
         $v3 = $request->getBody();
         $paises = json_decode($v3);
 
@@ -52,7 +55,7 @@ class AuthorController extends Controller
     public function storeEdit()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Country/ListCountry');
         $v3 = $request->getBody();
         $v3 = json_decode($v3);
         $countId = '';
@@ -74,15 +77,24 @@ class AuthorController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Author/Update', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Author/Update', [
             'body'=>$body
         ]);
         return $response->getBody();
         // return $body;
     }
 
-    public function destroy($id)
+    public function delete(){
+        return view('authors.delete');
+    }
+
+    public function eliminar()
     {
-        //
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('34.217.191.19/LibraryApi/api/Security/ChangeStateUser?UserId='.request('id').'&State=false');
+
+        return $response->getBody();
     }
 }

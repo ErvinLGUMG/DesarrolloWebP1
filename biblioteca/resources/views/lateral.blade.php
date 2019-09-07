@@ -5,7 +5,7 @@
     <a class="nav-link "href="{{ route('editorials.index') }}">Editorial</a>
 </li>
 <li class="nav-item">
-<a class="nav-link " href="{{ route('authors.create') }}">Libros</a>
+<a class="nav-link " href="{{ route('books.create') }}">Libros</a>
 </li>
 <li class="nav-item">
     <a class="nav-link " href="{{ route('permissions.index') }}">Permisos</a>

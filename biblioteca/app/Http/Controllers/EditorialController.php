@@ -10,10 +10,15 @@ use function GuzzleHttp\json_encode;
 
 class EditorialController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Editorial/ListEditorial');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Editorial/ListEditorial');
         $editorials = $request->getBody();
 
         return view('editorials.index',['editorials' => json_decode($editorials)]);
@@ -22,7 +27,7 @@ class EditorialController extends Controller
     public function create()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Country/ListCountry');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Country/ListCountry');
         $v1 = $request->getBody();
 
         $paises = json_decode($v1);
@@ -36,7 +41,7 @@ class EditorialController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Editorial/Create', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Editorial/Create', [
             'body'=>json_encode([
                  'Name' => request('name'),
                 'CountryId' => request('pais'),
@@ -57,7 +62,7 @@ class EditorialController extends Controller
     public function show($id)
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Editorial/Editorial?EditorialId='.$id);
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Editorial/Editorial?EditorialId='.$id);
         $editorials = $request->getBody()->getContents();
 
         $editorials = json_decode($editorials);
@@ -98,20 +103,18 @@ class EditorialController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Editorial/Update', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Editorial/Update', [
             'body'=>$body
         ]);
         return $response->getBody();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('34.217.191.19/LibraryApi/api/Editorial/ChangeState?EditorialId='.$id.'&State=false');
+        return redirect()->route('editorials.index');
     }
 }

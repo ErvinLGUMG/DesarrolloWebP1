@@ -12,15 +12,15 @@ use function GuzzleHttp\json_encode;
 
 class PermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct(){
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/ListPermissions');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/ListPermissions');
         $permissions = $request->getBody();
 
         return view('permissions.index',['permissions' => json_decode($permissions)]);
@@ -40,7 +40,7 @@ class PermissionController extends Controller
         // $client = new Client([
         //     'headers'=>['Content-Type' => 'application/json']
         //  ]);
-        //  $response = $client->post('40.117.209.118/libraryapi/api/Security/CreatePermissions', [
+        //  $response = $client->post('34.217.191.19/libraryapi/api/Security/CreatePermissions', [
         //     'body'=>json_encode([
         //         'PermissionsId' => request('id'),
         //         'Name' => request('name'),
@@ -60,7 +60,7 @@ class PermissionController extends Controller
     public function show($PermissionsId)
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/Permissions?PermissionsId='.$PermissionsId);
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/Permissions?PermissionsId='.$PermissionsId);
         $permissions = $request->getBody()->getContents();
 
         $permissions = json_decode($permissions);

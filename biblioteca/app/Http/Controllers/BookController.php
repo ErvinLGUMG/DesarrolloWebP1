@@ -10,21 +10,10 @@ use function GuzzleHttp\json_encode;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __construct(){
+        $this->middleware('admin');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categorias[] = array();
@@ -32,17 +21,17 @@ class BookController extends Controller
         $autores[] = array();
 
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Category/ListCategory');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Category/ListCategory');
         $v1 = $request->getBody();
 
         $categorias = json_decode($v1);
 
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Editorial/ListEditorial');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Editorial/ListEditorial');
         $v2 = $request->getBody();
 
         $editoriales = json_decode($v2);
 
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Author/ListAuthor');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Author/ListAuthor');
         $v3 = $request->getBody();
 
         $autores = json_decode($v3);
@@ -62,22 +51,22 @@ class BookController extends Controller
         $users[] = array();
 
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Category/ListCategory');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Category/ListCategory');
         $v1 = $request->getBody();
 
         $categorias = json_decode($v1);
 
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Editorial/ListEditorial');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Editorial/ListEditorial');
         $v2 = $request->getBody();
 
         $editoriales = json_decode($v2);
 
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Author/ListAuthor');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Author/ListAuthor');
         $v3 = $request->getBody();
 
         $autores = json_decode($v3);
 
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Security/ListUsers');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Security/ListUsers');
         $v4 = $request->getBody();
 
         $users = json_decode($v4);
@@ -90,12 +79,12 @@ class BookController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store($id)
     {
         $client = new Client([
             'headers' => ['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Document/Create', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Document/Create', [
             'body' => json_encode([
                 'Title' => request('title'),
                 'Description' => request('description'),
@@ -112,7 +101,7 @@ class BookController extends Controller
     public function storeEdit()
     {
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Category/ListCategory');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Category/ListCategory');
         $v4 = $request->getBody();
         $v4 = json_decode($v4);
         $catId = '';
@@ -127,7 +116,7 @@ class BookController extends Controller
         }
 
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Author/ListAuthor');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Author/ListAuthor');
         $v3 = $request->getBody();
         $v3 = json_decode($v3);
         $autId = '';
@@ -141,7 +130,7 @@ class BookController extends Controller
         }
 
         $client = new Client();
-        $request = $client->get('http://40.117.209.118/LibraryApi/api/Editorial/ListEditorial');
+        $request = $client->get('http://34.217.191.19/LibraryApi/api/Editorial/ListEditorial');
         $v2 = $request->getBody();
         $v2 = json_decode($v2);
         $editId = '';
@@ -169,7 +158,7 @@ class BookController extends Controller
         $client = new Client([
             'headers'=>['Content-Type' => 'application/json']
         ]);
-        $response = $client->post('40.117.209.118/libraryapi/api/Document/Update', [
+        $response = $client->post('34.217.191.19/libraryapi/api/Document/Update', [
             'body'=>$body
         ]);
         return $response->getBody();
@@ -201,28 +190,19 @@ class BookController extends Controller
         //return view('books.edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request)
-    // {
-    //     dd($request);
-    // }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete()
     {
-        //
+        return view('books.delete');
+    }
+
+    public function eliminar()
+    {
+        $client = new Client([
+            'headers'=>['Content-Type' => 'application/json']
+        ]);
+        $response = $client->post('34.217.191.19/LibraryApi/api/Document/ChangeState?DocumentId='.request('id').'&State=false');
+
+        return $response->getBody();
+        // return request('id');
     }
 }

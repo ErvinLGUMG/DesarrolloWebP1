@@ -12,7 +12,10 @@
             <a class="btn btn-primary" href="{{ route('users.edit',$user->UserId) }}" role="button">Actualizar este usuario</a>
         </td>
         <td colspan="2" style="text-align:center">
-            <a class="btn btn-danger" href="{{ route('users.destroy',$user->UserId) }}" role="button">Eliminar este usuario</a>
+            <form method="POST" action="{{ route('users.delete',$user->UserId) }}">
+                @csrf
+                <button type="submit" class="btn btn-danger">Eliminar esta Usuario</button>
+            </form>
         </td>
     </tr>
 

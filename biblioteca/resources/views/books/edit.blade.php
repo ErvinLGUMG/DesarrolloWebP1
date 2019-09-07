@@ -15,8 +15,8 @@
 
 @section('tbody')
 <tr>
-    <td style="text-align:center"> <a class="btn btn-success" href="#" role="button">Crear un libro nuevo</a> </td>
-    <td style="text-align:center"> <a class="btn btn-danger" href="#" role="button">Eliminar un libro</a> </td>
+    <td style="text-align:center"> <a class="btn btn-success" href="{{ route('books.create') }}" role="button">Crear un libro nuevo</a> </td>
+    <td style="text-align:center"> <a class="btn btn-danger" href="{{ route('books.delete') }}" role="button">Eliminar un libro</a> </td>
 
 </tr>
 <th colspan="3" style="text-align:center">ACTUALIZAR LIBRO</th>
