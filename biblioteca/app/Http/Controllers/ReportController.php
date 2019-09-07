@@ -10,6 +10,9 @@ use function GuzzleHttp\json_encode;
 
 class ReportController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin');
+    }
 
     public function authors(){
         $client = new Client();

@@ -43,8 +43,8 @@
           <img src="{{asset('img/apache.png')}}" height="75" alt="">
       </div>
       <div class="col-lg-8" >
-        @if (Route::has('login'))
             <div class="top-right links">
+         @if (Route::has('login'))
                 @auth
                     <a href="{{ url('/home') }}">Home</a>
                 @else
@@ -62,22 +62,57 @@
   </div>
 
   <div class="container">
-    <nav class="navbar shadow-lg navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar shadow-lg navbar-expand-lg navbar-light bg-light" style="overflow: auto;">
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item  ">
           <a class="nav-link" href="{{ route('inicio')}}">Home <span class="sr-only">(current)</span></a>
           </li>
-          @foreach ($menu as $item)
-            @foreach ($item as $value)
-            <li class="nav-item ">
-            <a class="nav-link " href="{{ route('biblioteca.inicio', [$value->CategoryId, $value->Name]) }}">{{$value->Name}}</a>
-            </li>
+
+            @if ($title=='AUTOR')
+            @foreach ($menu as $item)
+              @foreach ($item as $value)
+              <li class="nav-item ">
+              <a class="nav-link " href="{{ route('biblioteca.inicio', [$value->AuthorlId, $value->Name, 'AUTOR']) }}">{{$value->Name}}</a>
+              </li>
+              @endforeach
             @endforeach
-          @endforeach
+
             <li class="nav-item ">
-                <a class="nav-link " href="{{ route('biblioteca.inicio', ['99', 'All']) }}">All</a>
-            </li>
+                  <a class="nav-link " href="{{ route('biblioteca.inicio', ['99', 'All','AUTOR']) }}">All</a>
+              </li>
+
+              @elseif($title=='EDITORIAL')
+            @foreach ($menu as $item)
+              @foreach ($item as $value)
+              <li class="nav-item ">
+              <a class="nav-link " href="{{ route('biblioteca.inicio', [$value->EditorialId, $value->Name, 'EDITORIAL']) }}">{{$value->Name}}</a>
+              </li>
+              @endforeach
+            @endforeach
+
+            <li class="nav-item ">
+                  <a class="nav-link " href="{{ route('biblioteca.inicio', ['99', 'All','EDITORIAL']) }}">All</a>
+              </li>
+              @else
+              @foreach ($menu as $item)
+                @foreach ($item as $value)
+                <li class="nav-item ">
+                <a class="nav-link " href="{{ route('biblioteca.inicio', [$value->CategoryId, $value->Name, 'CATEGORIA']) }}">{{$value->Name}}</a>
+                </li>
+                @endforeach
+              @endforeach
+
+              <li class="nav-item ">
+                    <a class="nav-link " href="{{ route('biblioteca.inicio', ['99', 'All','CATEGORIA']) }}">All</a>
+                </li>
+
+
+
+
+              @endif
+
+
         </ul>
       </div>
     </nav>

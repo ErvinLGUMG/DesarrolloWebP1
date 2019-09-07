@@ -100,17 +100,10 @@
                 <div class="links">
                     @foreach ($menu as $item)
                         @foreach ($item as $value)
-                        <a href="{{ route('biblioteca.inicio', [$value->CategoryId, $value->Name])}}">{{$value->Name}}</a>
+                        <a href="{{ route('biblioteca.inicio', [$value->CategoryId, $value->Name, 'CATEGORIA'])}}">{{$value->Name}}</a>
                         @endforeach
                     @endforeach
                     <br>
-                    ID: {{ session()->get('id') }} <br>
-                    NAME: {{ session()->get('name') }} <br>
-                    USER: {{ session()->get('user') }} <br>
-                    ROLEID: {{ session()->get('roleId') }} <br>
-                    {{-- PERMISO 1: {{ session()->get('permiso1') }} <br>
-                    PERMISO 2: {{ session()->get('permiso2') }} <br>
-                    PERMISO 3: {{ session()->get('permiso3') }} <br> --}}
 
                 </div>
             </div>

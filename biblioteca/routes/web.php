@@ -3,7 +3,9 @@
 Route::get('/', 'BibliotecaController@index')->name('inicio');
 //Route::get('/biblioteca')->name('prueba1');
 Auth::routes();
-Route::get('/Biblioteca/{id}/{name}', 'BibliotecaController@cursos')->name('biblioteca.inicio');
+Route::get('/Biblioteca/{id}/{name}/{tipo}', 'BibliotecaController@cursos')->name('biblioteca.inicio');
+
+Route::get('/Biblioteca/Busqueda', 'BibliotecaController@store')->name('tipobusqueda');
 Route::get('/Detalle/{id}', 'BibliotecaController@detalle')->name('detalle');
 
 Route::get('/permisos','PermissionController@index')->name('permissions.index');
@@ -19,6 +21,8 @@ Route::post('/editoriales/{id}', 'EditorialController@delete')->name('editorials
 //--------------------------------------------------------------------------------------------
 Route::get('/reporte/autores', 'ReportController@authors')->name('reports.authors');
 Route::get('/reporte/categorias', 'ReportController@categories')->name('reports.categories');
+
+
 
 
 Route::get('/roles','RolController@index')->name('roles.index');
